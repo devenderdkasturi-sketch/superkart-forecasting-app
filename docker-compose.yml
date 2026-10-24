@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  # Predictor engine backend framework API microservice service context
+  backend:
+    build: ./backend_files
+    container_name: superkart_backend_container
+    ports:
+      - "7860:7860"
+    networks:
+      - superkart_isolated_network
+    restart: unless-stopped
+
+  # Client-side user interface dashboard monitoring view segment
+  frontend:
+    build: ./frontend_files
+    container_name: superkart_frontend_container
+    ports:
+      - "8501:8501"
+    networks:
+      - superkart_isolated_network
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+networks:
+  superkart_isolated_network:
+    driver: bridge
